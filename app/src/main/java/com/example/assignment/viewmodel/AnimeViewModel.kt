@@ -23,7 +23,6 @@ class AnimeViewModel(private val repository: AnimeRepository) : ViewModel() {
     val error: LiveData<String?> get() = _error
 
     init {
-        // Automatically try to sync with the API on startup
         refreshData()
     }
 

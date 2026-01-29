@@ -29,7 +29,6 @@ class AnimeRepository(
 
     // --- Sync Logic: Anime List ---
     suspend fun refreshAnimeList() {
-        // Force the execution to the IO thread
         withContext(Dispatchers.IO) {
             try {
                 val response = apiService.getTopAnime()
@@ -46,7 +45,6 @@ class AnimeRepository(
                         )
                     }
 
-                    // Now these run safely on the background thread
                     animeDao.clearAll()
                     animeDao.insertAnimeList(entities)
 

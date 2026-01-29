@@ -9,7 +9,7 @@ import com.example.assignment.databinding.ListCardViewBinding
 import com.example.assignment.model.db.AnimeEntity
 import com.example.assignment.util.loadImage
 
-// Inheriting from ListAdapter handles the list and DiffUtil automatically!
+// Inheriting from ListAdapter handles the list and DiffUtil automatically
 class AnimeListAdapter(private val onItemClicked: (AnimeEntity) -> Unit) :
     ListAdapter<AnimeEntity, AnimeListAdapter.ViewHolder>(AnimeDiffCallback()) {
 
@@ -23,11 +23,9 @@ class AnimeListAdapter(private val onItemClicked: (AnimeEntity) -> Unit) :
     }
 
     class ViewHolder(private val binding: ListCardViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        // Changed item type to AnimeEntity
         fun bind(item: AnimeEntity, onItemClicked: (AnimeEntity) -> Unit) {
             binding.animeList = item
 
-            // In Room, you stored the URL directly as a String, so we pass it directly
             loadImage(binding.poster, item.imageUrl)
 
             binding.root.setOnClickListener {
@@ -37,7 +35,6 @@ class AnimeListAdapter(private val onItemClicked: (AnimeEntity) -> Unit) :
         }
     }
 
-    // Updated DiffUtil to use AnimeEntity and compare by ID
     class AnimeDiffCallback : DiffUtil.ItemCallback<AnimeEntity>() {
         override fun areItemsTheSame(oldItem: AnimeEntity, newItem: AnimeEntity): Boolean {
             // IDs are the most reliable way to check if it's the same item

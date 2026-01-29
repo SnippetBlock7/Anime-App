@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class AnimeDetailViewModel(private val repository: AnimeRepository) : ViewModel() {
     private val _animeId = MutableLiveData<Int>()
 
-    // Observe the single anime from Room.
     // switchMap automatically switches the observation to the new ID when changed.
     val animeDetail: LiveData<AnimeEntity?> = _animeId.switchMap { id ->
         repository.getAnimeDetails(id).asLiveData()
@@ -26,7 +25,7 @@ class AnimeDetailViewModel(private val repository: AnimeRepository) : ViewModel(
         repository.getCharactersFromDb(id).asLiveData()
     }
 
-    // 3. UI States for Feedback (Network status)
+    //UI States for Feedback (Network status)
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
@@ -43,7 +42,6 @@ class AnimeDetailViewModel(private val repository: AnimeRepository) : ViewModel(
             _error.value = null
             try {
                 // Sync both from network to database
-                // Use coroutineScope to run them in parallel
                 coroutineScope {
                     val detailsJob = launch { repository.refreshAnimeDetails(id) }
                     val charactersJob = launch { repository.refreshCharacters(id) }
